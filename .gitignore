@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+usage.db
+.env
+kindle-ai-usage/
+kindlemodding.github.io/
+wb2.zip
+CLAUDE.md
+AGENTS.md
