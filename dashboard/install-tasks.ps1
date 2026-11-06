@@ -1,4 +1,4 @@
-$dir = 'C:\Users\sriva\Desktop\Me\kindle\kindle-ai-usage'
+$dir = Join-Path $PSScriptRoot 'kindle-ai-usage'
 $node = (Get-Command node).Source
 $user = "$env:USERDOMAIN\$env:USERNAME"
 $principal = New-ScheduledTaskPrincipal -UserId $user -LogonType S4U
