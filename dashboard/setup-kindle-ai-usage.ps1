@@ -13,5 +13,9 @@ if (-not (Test-Path (Join-Path $dir '.env'))) {
   $bytes = New-Object byte[] 32
   [Security.Cryptography.RandomNumberGenerator]::Create().GetBytes($bytes)
   $token = -join ($bytes | ForEach-Object { '{0:x2}' -f $_ })
-  (Get-Content (Join-Path $root 'kindle-ai-usage.env.example')) -replace '^KINDLETOKEN_INGEST_TOKEN=.*', "KINDLETOKEN_INGEST_TOKEN=$token" | Set-Content -Encoding ascii (Join-Path $dir '.env')
+  $bunx = (Join-Path $env:APPDATA 'npm\node_modules\bun\bin\bunx.exe') -replace '\\', '/'
+  (Get-Content (Join-Path $root 'kindle-ai-usage.env.example')) `
+    -replace '^KINDLETOKEN_INGEST_TOKEN=.*', "KINDLETOKEN_INGEST_TOKEN=$token" `
+    -replace '^KINDLETOKEN_CCUSAGE_COMMAND=BUNX', "KINDLETOKEN_CCUSAGE_COMMAND=$bunx" |
+    Set-Content -Encoding ascii (Join-Path $dir '.env')
 }
