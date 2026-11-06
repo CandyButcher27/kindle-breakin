@@ -1,0 +1,2 @@
+*.sh text eol=lf
+kindle/*.conf text eol=lf
