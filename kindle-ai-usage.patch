@@ -1,0 +1,14 @@
+diff --git a/bin/kindletoken-collect.mjs b/bin/kindletoken-collect.mjs
+index e9998a1..68164db 100644
+--- a/bin/kindletoken-collect.mjs
++++ b/bin/kindletoken-collect.mjs
+@@ -15,7 +15,8 @@ const commandArgs = process.env.KINDLETOKEN_CCUSAGE_COMMAND
+ const executable = process.env.KINDLETOKEN_CCUSAGE_COMMAND ? process.env.KINDLETOKEN_CCUSAGE_COMMAND.split(/\s+/)[0] : command;
+ const { stdout } = await execFileAsync(executable, commandArgs, { windowsHide: true, maxBuffer: 20 * 1024 * 1024 });
+ const report = JSON.parse(stdout);
+-const entries = ccusageEntries(report);
++const only = process.env.KINDLETOKEN_AGENTS?.split(',');
++const entries = ccusageEntries(report).filter((entry) => !only || only.includes(entry.agent));
+ const sourceId = process.env.KINDLETOKEN_SOURCE_ID ?? 'ccusage';
+ await pushSnapshot(server, token, { machineId, sourceId, capturedAt: new Date().toISOString(), entries });
+ console.log(`kindletoken: pushed ${entries.length} daily aggregate rows from ${machineId}`);
